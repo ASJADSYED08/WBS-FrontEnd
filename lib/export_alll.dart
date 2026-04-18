@@ -1,0 +1,9 @@
+export 'package:get/get.dart';
+export 'package:flutter_screenutil/flutter_screenutil.dart';
+export 'package:flutter/material.dart';
+export 'package:ned_project/widgets/text_field.dart';
+export 'package:flutter_svg/flutter_svg.dart';
+export 'package:otp_text_field/otp_field.dart';
+export 'package:otp_text_field/otp_field_style.dart';
+export 'package:otp_text_field/style.dart';
+export 'package:dotted_border/dotted_border.dart';
