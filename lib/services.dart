@@ -34,20 +34,25 @@ class apiServices {
       );
       var res_data = json.decode(response.body.toString());
 
-      if (res_data['status'] == true) {
+      if (res_data['status'] == 200) {
         Get.back();
-        access_token = res_data['data']['token'];
-        otp = res_data['data']['code'];
+        // access_token = res_data['data']['token'];
+        otp = res_data['data']['otp'];
         Get.to(() => OtpScreen());
-        Get.snackbar('Success', res_data['message'], snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.green);
+        Get.snackbar('Success', res_data['message'],
+            snackPosition: SnackPosition.TOP,
+            colorText: Colors.white,
+            backgroundColor: Colors.green);
       } else {
         Get.back();
-        Get.snackbar('Error', res_data['message'], snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+        Get.snackbar('Error', res_data['message'],
+            snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
       }
     } catch (e) {
       Get.back();
 
-      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
     }
   }
 
@@ -63,15 +68,24 @@ class apiServices {
 
       var res_data = json.decode(response.body.toString());
       if (res_data['status'] == 200) {
-        Get.snackbar('Success', res_data['message'], snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.green);
+        Get.snackbar('Success', res_data['message'],
+            snackPosition: SnackPosition.TOP,
+            colorText: Colors.white,
+            backgroundColor: Colors.green);
 
         return res_data;
       } else {
-        Get.snackbar('Error', res_data['message'], snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.black);
+        Get.snackbar('Error', res_data['message'],
+            snackPosition: SnackPosition.TOP,
+            colorText: Colors.white,
+            backgroundColor: Colors.black);
       }
     } catch (e) {
       Get.back();
-      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 3), colorText: Colors.white);
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: Duration(seconds: 3),
+          colorText: Colors.white);
     }
   }
 
@@ -99,21 +113,25 @@ class apiServices {
 
       if (res_data['status'] == 200) {
         access_token = res_data['data']['token'];
-        // Future f1 = GetMe(context);
-        // Future.wait([f1]).then((value) async {
-        //   Get.back();
-        //   Get.snackbar('Success', res_data['message'], snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.green);
-
-        // });
+        Future f1 = GetMe(context);
+        Future.wait([f1]).then((value) async {
+          Get.back();
+          Get.snackbar('Success', res_data['message'],
+              snackPosition: SnackPosition.TOP,
+              colorText: Colors.white,
+              backgroundColor: Colors.green);
+        });
         Get.offAll(() => NavbarScreen());
       } else {
         Get.back();
-        Get.snackbar('Error', res_data['message'], snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+        Get.snackbar('Error', res_data['message'],
+            snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
       }
     } catch (e) {
       Get.back();
 
-      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
     }
   }
 
@@ -143,15 +161,18 @@ class apiServices {
       if (res_data['status'] == 200) {
         print("object");
         Get.back();
-        Get.snackbar('Success', res_data['message'], snackPosition: SnackPosition.TOP, colorText: Colors.black);
+        Get.snackbar('Success', res_data['message'],
+            snackPosition: SnackPosition.TOP, colorText: Colors.black);
       } else {
         Get.back();
-        Get.snackbar('Error', res_data['message'], snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+        Get.snackbar('Error', res_data['message'],
+            snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
       }
     } catch (e) {
       Get.back();
 
-      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
     }
   }
 
@@ -163,10 +184,10 @@ class apiServices {
         return Center(child: spinkit);
       },
     );
-    final uri = Uri.parse('${apiUrl}auth/verifyOtp');
+    final uri = Uri.parse('${apiUrl}auth/verify-otp');
     var headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${access_token}',
+      // 'Authorization': 'Bearer ${access_token}',
     };
     print(data.toString());
     String jsonBody = json.encode(data);
@@ -178,19 +199,24 @@ class apiServices {
       );
       var res_data = json.decode(response.body.toString());
 
-      if (res_data['status'] == true) {
+      if (res_data['status'] == 200) {
         Get.back();
-
+        access_token = res_data['data']['token'];
         Get.to(() => CreateProfileScreen());
-        Get.snackbar('Success', res_data['message'], snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.green);
+        Get.snackbar('Success', res_data['message'],
+            snackPosition: SnackPosition.TOP,
+            colorText: Colors.white,
+            backgroundColor: Colors.green);
       } else {
         Get.back();
-        Get.snackbar('Error', res_data['message'], snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+        Get.snackbar('Error', res_data['message'],
+            snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
       }
     } catch (e) {
       Get.back();
 
-      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
     }
   }
 
@@ -222,16 +248,21 @@ class apiServices {
 
         otp = res_data['data'];
 
-        Get.snackbar('Success', res_data['message'], snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.green);
+        Get.snackbar('Success', res_data['message'],
+            snackPosition: SnackPosition.TOP,
+            colorText: Colors.white,
+            backgroundColor: Colors.green);
         return res_data;
       } else {
         Get.back();
-        Get.snackbar('Error', res_data['message'], snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+        Get.snackbar('Error', res_data['message'],
+            snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
       }
     } catch (e) {
       Get.back();
 
-      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
     }
   }
 
@@ -243,21 +274,21 @@ class apiServices {
         return Center(child: spinkit);
       },
     );
-    final uri = Uri.parse('${apiUrl}auth/createProfile');
+    final uri = Uri.parse('${apiUrl}auth/create-profile');
     var header = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${access_token}',
+      'authorization': 'Bearer ${access_token}',
     };
     try {
       var request = http.MultipartRequest('POST', uri);
 
-      request.fields["bussinessName"] = data["bussinessName"].toString();
+      request.fields["businessName"] = data["bussinessName"].toString();
       request.fields["companySize"] = data["companySize"].toString();
-      request.fields["description"] = data["description"].toString();
+      request.fields["about"] = data["description"].toString();
 
       if (file != null) {
         var multipartFile = await http.MultipartFile.fromPath(
-          'image',
+          'profilePicture',
           file.path,
           filename: file.path.split('/').last,
           contentType: MediaType("image", "${file.path.split('.').last}"),
@@ -270,28 +301,33 @@ class apiServices {
       final res = await http.Response.fromStream(response);
       var res_data = json.decode(res.body.toString());
 
-      if (res_data['status'] == true) {
+      if (res_data['status'] == 200) {
         Future f1 = GetMe(context);
         Future.wait([f1]).then((value) async {
           Get.back();
-          Get.snackbar('Success', res_data['message'], snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.green);
+          Get.snackbar('Success', res_data['message'],
+              snackPosition: SnackPosition.TOP,
+              colorText: Colors.white,
+              backgroundColor: Colors.green);
 
           Get.offAll(() => NavbarScreen());
         });
       } else {
         Get.back();
-        Get.snackbar('Error', res_data['message'], snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+        Get.snackbar('Error', res_data['message'],
+            snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
       }
     } catch (e) {
       Get.back();
-      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
     }
   }
 
   Future<void> GetMe(context) async {
     try {
       final response = await http.get(
-        Uri.parse('${apiUrl}auth/getMe'),
+        Uri.parse('${apiUrl}auth/profile'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ${access_token}',
@@ -299,19 +335,25 @@ class apiServices {
       );
 
       var res_data = json.decode(response.body.toString());
-      if (res_data['status'] == true) {
-        business_name = res_data['data']['bussinessName'];
-        user_name = res_data['data']['name'];
-        user_email = res_data['data']['email'];
-        profile_picture = res_data['data']['image']['mediaUrl'].toString();
-        companySize = res_data['data']['companySize'].toString();
-        description = res_data['data']['description'].toString();
+      if (res_data['status'] == 200) {
+        business_name = res_data['data']['user']['businessName'];
+        user_name = res_data['data']['user']['name'];
+        user_email = res_data['data']['user']['email'];
+        profile_picture = res_data['data']['user']['profilePicture'].toString();
+        companySize = res_data['data']['user']['companySize'].toString();
+        description = res_data['data']['user']['about'].toString();
       } else {
-        Get.snackbar('Error', res_data['message'], snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.black);
+        Get.snackbar('Error', res_data['message'],
+            snackPosition: SnackPosition.TOP,
+            colorText: Colors.white,
+            backgroundColor: Colors.black);
       }
     } catch (e) {
       Get.back();
-      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 3), colorText: Colors.white);
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: Duration(seconds: 3),
+          colorText: Colors.white);
     }
   }
 
@@ -350,16 +392,21 @@ class apiServices {
 
       if (res_data['status'] == true) {
         Get.back();
-        Get.snackbar('Success', res_data['message'], snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.green);
+        Get.snackbar('Success', res_data['message'],
+            snackPosition: SnackPosition.TOP,
+            colorText: Colors.white,
+            backgroundColor: Colors.green);
 
         Get.offAll(() => NavbarScreen());
       } else {
         Get.back();
-        Get.snackbar('Error', res_data['message'], snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+        Get.snackbar('Error', res_data['message'],
+            snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
       }
     } catch (e) {
       Get.back();
-      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
     }
   }
 
@@ -375,15 +422,24 @@ class apiServices {
 
       var res_data = json.decode(response.body.toString());
       if (res_data['status'] == true) {
-        Get.snackbar('Success', res_data['message'], snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.green);
+        Get.snackbar('Success', res_data['message'],
+            snackPosition: SnackPosition.TOP,
+            colorText: Colors.white,
+            backgroundColor: Colors.green);
 
         return res_data;
       } else {
-        Get.snackbar('Error', res_data['message'], snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.black);
+        Get.snackbar('Error', res_data['message'],
+            snackPosition: SnackPosition.TOP,
+            colorText: Colors.white,
+            backgroundColor: Colors.black);
       }
     } catch (e) {
       Get.back();
-      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 3), colorText: Colors.white);
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: Duration(seconds: 3),
+          colorText: Colors.white);
     }
   }
 
@@ -399,15 +455,24 @@ class apiServices {
 
       var res_data = json.decode(response.body.toString());
       if (res_data['status'] == true) {
-        Get.snackbar('Success', res_data['message'], snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.green);
+        Get.snackbar('Success', res_data['message'],
+            snackPosition: SnackPosition.TOP,
+            colorText: Colors.white,
+            backgroundColor: Colors.green);
 
         return res_data;
       } else {
-        Get.snackbar('Error', res_data['message'], snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.black);
+        Get.snackbar('Error', res_data['message'],
+            snackPosition: SnackPosition.TOP,
+            colorText: Colors.white,
+            backgroundColor: Colors.black);
       }
     } catch (e) {
       Get.back();
-      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 3), colorText: Colors.white);
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: Duration(seconds: 3),
+          colorText: Colors.white);
     }
   }
 }

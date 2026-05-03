@@ -202,8 +202,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     user_name =
                         _SignupController.firstNameController.text.toString();
 
-                    // _SignupController.signUp(context, data);
-                    Get.to(() => OtpScreen());
+                    _SignupController.signUp(context, data);
+                    // Get.to(() => OtpScreen());
                   },
                 ),
                 0.02.sh.verticalSpace,

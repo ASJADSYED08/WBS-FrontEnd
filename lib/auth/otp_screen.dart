@@ -1,5 +1,6 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:ned_project/auth/create_profile.dart';
+import 'package:ned_project/auth/global.dart';
 import 'package:ned_project/export_alll.dart';
 import 'package:ned_project/services.dart';
 export 'package:circular_countdown_timer/circular_countdown_timer.dart';
@@ -88,12 +89,18 @@ class _OtpScreenState extends State<OtpScreen> {
                 0.12.sh.verticalSpace,
                 Text(
                   "Verify OTP",
-                  style: TextStyle(fontSize: 46.sp, fontWeight: FontWeight.w600, color: Color(0xff1E3A5F)),
+                  style: TextStyle(
+                      fontSize: 46.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff1E3A5F)),
                 ),
                 SizedBox(height: 12.h),
                 Text(
-                  "We've sent a verification code to your email",
-                  style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w400, color: Color(0xff5A6C7D)),
+                  "We've sent a verification code to your email ${otp}",
+                  style: TextStyle(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xff5A6C7D)),
                 ),
                 50.h.verticalSpace,
                 Center(
@@ -124,10 +131,11 @@ class _OtpScreenState extends State<OtpScreen> {
                       setState(() {
                         print("Code${value}");
                         var data = {
-                          "otpKey": value.toString(),
+                          "otp": value.toString(),
+                          "email": user_email,
                         };
-                        // apiServices().verifyOtp(context, data);
-                        Get.to(() => CreateProfileScreen());
+                        apiServices().verifyOtp(context, data);
+                        // Get.to(() => CreateProfileScreen());
                       });
                     },
                     onChanged: (value) {

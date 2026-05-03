@@ -62,7 +62,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       fit: BoxFit.cover,
                                     ),
                                   )
-                                : Icon(Icons.person, size: 60.r, color: Colors.white),
+                                : Icon(Icons.person,
+                                    size: 60.r, color: Colors.white),
                           ),
                         ],
                       ),

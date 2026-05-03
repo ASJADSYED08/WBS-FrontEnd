@@ -15,7 +15,8 @@ class CreateProfileScreen extends StatefulWidget {
 }
 
 class _CreateProfileScreenState extends State<CreateProfileScreen> {
-  final CreateProfileController _CreateProfileController = Get.put(CreateProfileController());
+  final CreateProfileController _CreateProfileController =
+      Get.put(CreateProfileController());
   File? _imageFile;
 
   Future<void> _pickImage(ImageSource source) async {
@@ -208,7 +209,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                                       ),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Color(0xff0078D4).withOpacity(0.2),
+                                          color: Color(0xff0078D4)
+                                              .withOpacity(0.2),
                                           blurRadius: 20,
                                           spreadRadius: 5,
                                         ),
@@ -236,7 +238,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                                       ),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Color(0xff0078D4).withOpacity(0.3),
+                                          color: Color(0xff0078D4)
+                                              .withOpacity(0.3),
                                           blurRadius: 20,
                                           spreadRadius: 5,
                                         ),
@@ -316,7 +319,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                 AppTextField(
                   hintText: 'Enter your business name',
                   hintColor: Color(0xff8A9BAE),
-                  errorMessage: _CreateProfileController.errorMessageBusinessName,
+                  errorMessage:
+                      _CreateProfileController.errorMessageBusinessName,
                   radius: 14.r,
                   controller: _CreateProfileController.businessNameController,
                   border: true,
@@ -349,7 +353,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                 AppTextField(
                   hintText: 'e.g., 10-50 employees',
                   hintColor: Color(0xff8A9BAE),
-                  errorMessage: _CreateProfileController.errorMessageCompanySize,
+                  errorMessage:
+                      _CreateProfileController.errorMessageCompanySize,
                   radius: 14.r,
                   controller: _CreateProfileController.companysizeController,
                   onChange: (p0) {},
@@ -381,7 +386,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                 ),
                 8.h.verticalSpace,
                 AppTextField(
-                  errorMessage: _CreateProfileController.errorMessageDiscription,
+                  errorMessage:
+                      _CreateProfileController.errorMessageDiscription,
                   controller: _CreateProfileController.disccriptionController,
                   hintText: "Describe your business, services, and goals...",
                   hintColor: Color(0xff8A9BAE),
@@ -408,12 +414,19 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   onPressed: () {
                     if (_imageFile != null) {
                       var data = {
-                        "bussinessName": _CreateProfileController.businessNameController.text.trim(),
-                        "companySize": _CreateProfileController.companysizeController.text.trim(),
-                        "description": _CreateProfileController.disccriptionController.text.trim(),
+                        "bussinessName": _CreateProfileController
+                            .businessNameController.text
+                            .trim(),
+                        "companySize": _CreateProfileController
+                            .companysizeController.text
+                            .trim(),
+                        "description": _CreateProfileController
+                            .disccriptionController.text
+                            .trim(),
                       };
-                      // _CreateProfileController.createProfile(context, data, _imageFile);
-                      Get.offAll(() => NavbarScreen());
+                      _CreateProfileController.createProfile(
+                          context, data, _imageFile);
+                      // Get.offAll(() => NavbarScreen());
                       print(_imageFile!.path);
                     } else {
                       Get.snackbar(
