@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ned_project/export_alll.dart';
+import 'package:ned_project/services.dart';
 
 class AIChatScreen extends StatefulWidget {
   const AIChatScreen({super.key});
@@ -31,50 +32,6 @@ class _AIChatScreenState extends State<AIChatScreen> {
     super.dispose();
   }
 
-  void _sendMessage() {
-    if (_messageController.text.trim().isEmpty) return;
-
-    setState(() {
-      _messages.add(ChatMessage(
-        text: _messageController.text.trim(),
-        isUser: true,
-        timestamp: DateTime.now(),
-      ));
-    });
-
-    _messageController.clear();
-    _scrollToBottom();
-
-    // Simulate AI response
-    Future.delayed(Duration(milliseconds: 500), () {
-      setState(() {
-        _messages.add(ChatMessage(
-          text: _generateAIResponse(_messages[_messages.length - 1].text),
-          isUser: false,
-          timestamp: DateTime.now(),
-        ));
-      });
-      _scrollToBottom();
-    });
-  }
-
-  String _generateAIResponse(String userMessage) {
-    // Simple response logic - replace with actual AI integration
-    String lowerMessage = userMessage.toLowerCase();
-
-    if (lowerMessage.contains('wbs') || lowerMessage.contains('work breakdown')) {
-      return "A Work Breakdown Structure (WBS) helps break down your project into manageable tasks. I can help you create a detailed WBS based on your project scope. Would you like me to generate one for your project?";
-    } else if (lowerMessage.contains('risk') || lowerMessage.contains('risks')) {
-      return "Risk analysis is crucial for project success. I can identify potential risks in your project and suggest mitigation strategies. Share your project details and I'll analyze the risks for you.";
-    } else if (lowerMessage.contains('scope') || lowerMessage.contains('project')) {
-      return "I'd be happy to help with your project! Please share your project scope, objectives, and requirements. I can help you create a WBS, analyze risks, and provide insights.";
-    } else if (lowerMessage.contains('hello') || lowerMessage.contains('hi')) {
-      return "Hello! I'm here to assist you with project management tasks. I can help with WBS creation, risk analysis, and project insights. What would you like to know?";
-    } else {
-      return "I understand you're asking about: ${userMessage}. I can help you with project planning, WBS creation, risk analysis, and project insights. Could you provide more details about what you need?";
-    }
-  }
-
   void _scrollToBottom() {
     Future.delayed(Duration(milliseconds: 100), () {
       if (_scrollController.hasClients) {
@@ -86,6 +43,29 @@ class _AIChatScreenState extends State<AIChatScreen> {
       }
     });
   }
+  String aiResponse = "";
+  // String _extractAiResponse(dynamic resData) {
+  //   if (resData == null) {
+  //     return "No response received from API.";
+  //   }
+  //   if (resData is Map<String, dynamic>) {
+  //     final data = resData['data'];
+  //     if (data is Map<String, dynamic>) {
+  //       final token = data['token'];
+  //       if (token != null && token.toString().trim().isNotEmpty) {
+  //         return token.toString();
+  //       }
+  //     }
+
+  //     final message = resData['message'];
+  //     if (message != null && message.toString().trim().isNotEmpty) {
+  //       return message.toString();
+  //     }
+
+  //     return resData.toString();
+  //   }
+  //   return resData.toString();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +114,10 @@ class _AIChatScreenState extends State<AIChatScreen> {
                   padding: const EdgeInsets.only(left: 16),
                   child: GestureDetector(
                     onTap: () {
-                      Get.back();
+                      // Get.back();
+
+                      Navigator.pop(context);
+                      print("ASJAD BACK");
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -209,7 +192,9 @@ class _AIChatScreenState extends State<AIChatScreen> {
                           controller: _messageController,
                           maxLines: null,
                           textInputAction: TextInputAction.send,
-                          onSubmitted: (_) => _sendMessage(),
+                          onSubmitted: (_) {
+                            FocusScope.of(context).unfocus();
+                          },
                           decoration: InputDecoration(
                             hintText: 'Type your message...',
                             hintStyle: TextStyle(
@@ -231,7 +216,49 @@ class _AIChatScreenState extends State<AIChatScreen> {
                     ),
                     12.w.horizontalSpace,
                     GestureDetector(
-                      onTap: _sendMessage,
+                      onTap: (){
+                        final enteredMessage = _messageController.text.trim();
+                        if (enteredMessage.isEmpty) return;
+
+                        setState(() {
+                          _messages.add(
+                            ChatMessage(
+                              text: enteredMessage,
+                              isUser: true,
+                              timestamp: DateTime.now(),
+                            ),
+                          );
+                        });
+                       
+                        _scrollToBottom();
+var message = _messageController.text.trim();
+_messageController.clear();
+                        var data = {
+                            "message": message,
+                          
+                          };
+                          print(data.toString());
+                        apiServices().AiChat(context, data).then(
+                            (res_data) async {
+                              if (mounted) {
+                                final responseText = res_data['data']['reply'];
+                                setState(() {
+
+                                  _messages.add(
+                                    ChatMessage(
+                                      text: responseText,
+                                      isUser: false,
+                                      timestamp: DateTime.now(),
+                                    ),
+                                  );
+                                });
+                                _scrollToBottom();
+                              }
+                            },
+                          );
+                        
+                        // _sendMessage();
+                      },
                       child: Container(
                         width: 48.w,
                         height: 48.h,

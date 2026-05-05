@@ -475,4 +475,44 @@ class apiServices {
           colorText: Colors.white);
     }
   }
+
+  AiChat(context, data) async {
+    // showDialog(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (BuildContext context) {
+    //     return Center(child: spinkit);
+    //   },
+    // );
+    final uri = Uri.parse('${apiUrl}ai/chat');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': access_token,
+    };
+    print(data.toString());
+    String jsonBody = json.encode(data);
+    try {
+      http.Response response = await http.post(
+        uri,
+        headers: headers,
+        body: jsonBody,
+      );
+      var res_data = json.decode(response.body.toString());
+
+      if (res_data['status'] == 200) {
+
+        print("asjadddd2222");
+        return res_data;
+      } else {
+
+        Get.snackbar('Error', res_data['message'],
+            snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+      }
+    } catch (e) {
+
+
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+    }
+  }
 }
